@@ -27,20 +27,31 @@ export default function Page() {
   Lenis();
 
   useEffect(() => {
-    // লোডিং শেষ হওয়ার সাথে সাথে GSAP ScrollTrigger রিফ্রেশ করা
+    // 🌟 ১. ব্রাউজারের ডিফল্ট স্ক্রোল মেমোরি বন্ধ করা (যাতে আগের স্ক্রোল পজিশন ধরে না রাখে)
+    if (typeof window !== "undefined" && window.history.scrollRestoration) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    // 🌟 ২. পেজ একদম ফ্রেশ রিলোড বা ফার্স্ট টাইম লোড হলে শুরুতে (0,0) এ নিয়ে যাওয়া
+    window.scrollTo(0, 0);
+  }, []); // এই ডিপেন্ডেন্সি খালি থাকায় এটি শুধুমাত্র পেজ লোড/রিলোড হলেই ১ বার এক্সিকিউট হবে
+
+  useEffect(() => {
+    // লোডিং শেষ হওয়ার সাথে সাথে GSAP ScrollTrigger রিফ্রেশ করা
     if (!isLoading) {
       ScrollTrigger.refresh();
+      // 🌟 ৩. সেফটি নেট: লোডার শেষ হওয়ার সাথে সাথে আরেকবার টপে স্ক্রোল নিশ্চিত করা (Lenis স্মুথনেসের জন্য)
+      window.scrollTo(0, 0); 
     }
   }, [isLoading]);
 
   return (
     <main className="bg-white min-h-screen relative">
       
-      {/* 🌟 লোডারকে কন্ডিশনাল রিটার্ন না করে সরাসরি রাখা হলো */}
+      {/* লোডারকে কন্ডিশনাল রিটার্ন না করে সরাসরি রাখা হলো */}
       {isLoading && <Loader onLoadingComplete={() => setIsLoading(false)} />}
 
-      {/* 🧱 মূল DOM স্ট্রাকচার সবসময় প্রেজেন্ট থাকবে। 
-          শুধু ডাটা লোড হওয়ার আগ পর্যন্ত এটিকে pointer-events-none এবং invisible করে রাখা হয়েছে */}
+      {/* 🧱 মূল DOM স্ট্রাকচার সবসময় প্রেজেন্ট থাকবে। */}
       <div className={`transition-opacity duration-500 ${isLoading ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
         <Overlay />
         <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
@@ -50,7 +61,7 @@ export default function Page() {
           <CookieConsent />
           <Cursor />
           <Navbar />
-          <Hero />
+          <Hero isLoading={isLoading} />
           <About />
           <Collection />
           <Paralax />

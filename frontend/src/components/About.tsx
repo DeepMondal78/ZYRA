@@ -64,7 +64,7 @@ export default function About(): JSX.Element {
 
           <div className="about-text mt-10">
             <button className="group relative overflow-hidden border border-black px-8 py-3 transition-all duration-500 hover:text-[#FBF3E4]">
-              <span className="relative z-10 text-[12px] uppercase text-gray-500 tracking-widest">
+              <span className="relative z-10 text-[11px] uppercase tracking-widest text-gray-500 group-hover:text-white group-active:text-white transition-colors duration-500">
                 Discover More
               </span>
               <div className="absolute inset-0 z-0 translate-y-full bg-black transition-transform duration-500 group-hover:translate-y-0"></div>
