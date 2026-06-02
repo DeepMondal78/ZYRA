@@ -57,8 +57,6 @@ function CheckoutForm({ clientSecret }: { clientSecret: string }) {
     }
 
     try {
-      // এখানে payment_method_data সরাসরি ব্যবহার না করে, 
-      // confirmParams এর ভেতর মানগুলো পাঠানো বেশি নিরাপদ (টাইপ এরর এড়াতে)
       const result = await stripe.confirmPayment({
         elements,
         clientSecret,
@@ -103,7 +101,7 @@ function CheckoutForm({ clientSecret }: { clientSecret: string }) {
 
   if (isSuccess) {
     return (
-      <div className="fixed inset-0 z-[9999] bg-[#FBF3E4] flex items-center justify-center p-6 text-center">
+      <div className="fixed inset-0 z-9999 bg-[#FBF3E4] flex items-center justify-center p-6 text-center">
         <div className="success-msg max-w-sm">
           <div className="w-20 h-20 bg-black text-white rounded-full flex items-center justify-center text-3xl mx-auto mb-6">✓</div>
           <h2 className="text-3xl font-bold text-black mb-2 uppercase tracking-tight font-[didot]">Order Confirmed</h2>
@@ -127,20 +125,20 @@ function CheckoutForm({ clientSecret }: { clientSecret: string }) {
           <h3 className="text-gray-500 font-semibold mb-6 uppercase tracking-widest text-[11px]">Shipping Details</h3>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
-              <input type="text" name="firstName" placeholder="First Name" onChange={handleInputChange} className="w-full p-4 border border-black/10 rounded-xl outline-none" required />
-              <input type="text" name="lastName" placeholder="Last Name" onChange={handleInputChange} className="w-full p-4 border border-black/10 rounded-xl outline-none" required />
+              <input type="text" name="firstName" placeholder="First Name" onChange={handleInputChange} className="w-full p-4 border border-black/10 rounded-xl outline-none text-black" required />
+              <input type="text" name="lastName" placeholder="Last Name" onChange={handleInputChange} className="w-full p-4 border border-black/10 rounded-xl outline-none text-black" required />
             </div>
-            <input type="email" name="email" placeholder="Email Address" onChange={handleInputChange} className="w-full p-4 border border-black/10 rounded-xl outline-none" required />
-            <input type="text" name="address" placeholder="Full Address" onChange={handleInputChange} className="w-full p-4 border border-black/10 rounded-xl outline-none" required />
+            <input type="email" name="email" placeholder="Email Address" onChange={handleInputChange} className="w-full p-4 border border-black/10 rounded-xl outline-none text-black" required />
+            <input type="text" name="address" placeholder="Full Address" onChange={handleInputChange} className="w-full p-4 border border-black/10 rounded-xl outline-none text-black" required />
             <div className="grid grid-cols-2 gap-4">
-              <input type="text" name="city" placeholder="City" onChange={handleInputChange} className="w-full p-4 border border-black/10 rounded-xl outline-none" required />
-              <input type="text" name="zipCode" placeholder="ZIP Code" onChange={handleInputChange} className="w-full p-4 border border-black/10 rounded-xl outline-none" required />
+              <input type="text" name="city" placeholder="City" onChange={handleInputChange} className="w-full p-4 border border-black/10 rounded-xl outline-none text-black" required />
+              <input type="text" name="zipCode" placeholder="ZIP Code" onChange={handleInputChange} className="w-full p-4 border border-black/10 rounded-xl outline-none text-black" required />
             </div>
           </div>
         </div>
         <div>
           <h3 className="text-gray-500 font-semibold mb-6 uppercase tracking-widest text-[11px]">Secure Payment Gateway</h3>
-          <div className="p-6 border border-black/10 rounded-2xl bg-white shadow-sm">
+          <div className="p-6 border border-black/10 rounded-2xl bg-white shadow-sm text-black">
             <PaymentElement />
           </div>
           {errorMessage && <p className="text-red-500 text-xs mt-3">⚠️ {errorMessage}</p>}
@@ -154,7 +152,7 @@ function CheckoutForm({ clientSecret }: { clientSecret: string }) {
             <span>Grand Total</span>
             <span>${Number(selectedProduct?.price || 0).toFixed(2)}</span>
           </div>
-          <button type="submit" disabled={isProcessing || !stripe} className="w-full bg-white text-black py-5 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-white/90 transition-all">
+          <button type="submit" disabled={isProcessing || !stripe} className="w-full bg-white text-black py-5 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-white/90 transition-all cursor-pointer">
             {isProcessing ? "Processing..." : "Authorize Payment"}
           </button>
         </div>
@@ -172,7 +170,10 @@ export default function CheckoutPage() {
       if (!isCheckoutOpen || !selectedProduct) return;
       try {
         const priceAmount = Number(selectedProduct.price);
-        const response = await fetch("http://localhost:5000/api/payment/create-payment-intent", {
+        
+        // 🌟 ১. লোকালহোস্ট পরিবর্তন করে ডাইনামিক লাইভ লিঙ্ক বসানো হলো
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL || "https://zyra-xlpl.onrender.com";
+        const response = await fetch(`${baseUrl}/api/payment/create-payment-intent`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ amount: priceAmount }),
@@ -190,7 +191,7 @@ export default function CheckoutPage() {
 
   return (
     <div className="fixed inset-0 z-[99999] bg-[#FBF3E4] overflow-y-auto py-20 px-4 md:px-10">
-      <button onClick={() => { closeCheckout(); setIsCartOpen(true); }} className="fixed top-10 text-black left-10 z-[100000] uppercase text-[10px] font-bold border-b border-black tracking-widest">
+      <button onClick={() => { closeCheckout(); setIsCartOpen(true); }} className="fixed top-10 text-black left-10 z-[100000] uppercase text-[10px] font-bold border-b border-black tracking-widest cursor-pointer">
         ← Back to Bag
       </button>
       {clientSecret ? (
@@ -198,7 +199,9 @@ export default function CheckoutPage() {
           <CheckoutForm clientSecret={clientSecret} />
         </Elements>
       ) : (
-        <div className="w-full h-screen flex items-center justify-center animate-pulse">Establishing Secure Gateway...</div>
+        <div className="w-full h-screen flex items-center justify-center animate-pulse text-black font-[didot] tracking-widest uppercase text-sm">
+          Establishing Secure Gateway...
+        </div>
       )}
     </div>
   );
