@@ -22,4 +22,4 @@ app.use('/api/products', productRoutes);
 app.use('/api/payment', paymentRoutes); // 👈 এটি যোগ করো (এন্ডপয়েন্ট: /api/payment/create-payment-intent)
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, '0.0.0.0', () => console.log(`Server running on port ${PORT}`));
