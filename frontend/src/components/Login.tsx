@@ -26,6 +26,7 @@ const Login: React.FC = () => {
         setErrorMessage(null);
 
         const baseUrl = process.env.NEXT_PUBLIC_API_URL || "https://zyra-xlpl.onrender.com";
+        // const baseUrl = "http://localhost:5000";
 
         if (mode === 'forgot') {
             try {
@@ -78,25 +79,48 @@ const Login: React.FC = () => {
         else {
             try {
                 console.log("Logging in user:", { email, password });
+                
                 const response = await fetch(`${baseUrl}/api/auth/login`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ email, password }),
                 });
 
+                const contentType = response.headers.get("content-type");
+                if (!contentType || !contentType.includes("application/json")) {
+                    const htmlErrorText = await response.text();
+                    console.error("🚨 BACKEND CRASHED (Login)! Actual Error HTML Below:");
+                    console.log(htmlErrorText);
+                    throw new Error("Backend server crashed. Please inspect browser Console tabs!");
+                }
+
                 const data = await response.json();
+                console.log("🔥 Backend Response Data:", data); // 👈 ব্যাকএন্ড কী পাঠাচ্ছে তা কনসোলে দেখার জন্য
 
                 if (!response.ok) {
                     throw new Error(data.message || "Invalid credential synchronization.");
                 }
 
-                localStorage.setItem("zyra_token", data.token);
-                if (data.user) {
-                    localStorage.setItem("zyra_user", JSON.stringify(data.user));
+                // 🌟 ব্যাকএন্ড থেকে টোকেন আসছে কিনা নিশ্চিত হয়ে সেভ করা
+                const token = data.token || data.accessToken; 
+                const user = data.user || data.userData;
+
+                if (token) {
+                    localStorage.setItem("zyra_token", token);
+                } else {
+                    console.warn("⚠️ Warning: No token received from backend!");
                 }
 
-                router.push("/"); 
-                router.refresh();
+                if (user) {
+                    localStorage.setItem("zyra_user", JSON.stringify(user));
+                }
+
+                // 🌟 ইউজারকে সফলতার মেসেজ দেখানো
+                alert("Login Successful! Redirecting...");
+
+                // 🌟 জোরপূর্বক হোম পেজে পাঠানো এবং উইন্ডো রিলোড করা যাতে টোকেন ঠিকঠাক ডিটেক্ট হয়
+                window.location.href = "/"; 
+                
             } catch (err: any) {
                 setErrorMessage(err.message || "Authentication layer response error.");
             } finally {
