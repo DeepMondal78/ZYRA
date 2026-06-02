@@ -102,7 +102,7 @@ function CheckoutForm({ clientSecret }: { clientSecret: string }) {
 
   if (isSuccess) {
     return (
-      <div className="fixed inset-0 z-[100000] bg-[#FBF3E4] flex items-center justify-center p-6 text-center">
+      <div className="fixed inset-0 z-100000 bg-[#FBF3E4] flex items-center justify-center p-6 text-center">
         <div className="success-msg max-w-sm">
           <div className="w-20 h-20 bg-black text-white rounded-full flex items-center justify-center text-3xl mx-auto mb-6">✓</div>
           <h2 className="text-3xl font-bold text-black mb-2 uppercase tracking-tight font-[didot]">Order Confirmed</h2>
