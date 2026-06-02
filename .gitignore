@@ -1,0 +1,16 @@
+# Root .gitignore
+
+# Frontend-এর জন্য
+frontend/node_modules/
+frontend/.next/
+frontend/.env
+frontend/.env.local
+
+# Backend-এর জন্য
+backend/node_modules/
+backend/.env
+backend/.env.local
+
+# সিস্টেম ফাইল
+.DS_Store
+.vscode/
