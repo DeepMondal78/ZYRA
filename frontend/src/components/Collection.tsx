@@ -40,7 +40,10 @@ export default function Collection() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/products");
+        //  এনভায়রনমেন্ট ভ্যারিয়েবল ডাইনামিক লিঙ্ক ব্যবহার করা হলো
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        const response = await fetch(`${apiUrl}/api/products`);
+        
         const data = await response.json();
         setDbProducts(data);
         setLoading(false);
