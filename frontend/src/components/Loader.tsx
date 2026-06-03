@@ -8,7 +8,7 @@ interface LoaderProps {
 
 export default function Loader({ onLoadingComplete }: LoaderProps) {
   const [counter, setCounter] = useState<number>(0);
-  
+
   const loaderRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLParagraphElement>(null);
   const brandRef = useRef<HTMLSpanElement>(null);
@@ -22,11 +22,11 @@ export default function Loader({ onLoadingComplete }: LoaderProps) {
     const interval = setInterval(() => {
 
       startValue += Math.floor(Math.random() * 4) + 1;
-      
+
       if (startValue >= endValue) {
         startValue = endValue;
         clearInterval(interval);
-        
+
         const tl = gsap.timeline({
           onComplete: () => {
             document.body.style.overflow = "auto";
@@ -42,12 +42,11 @@ export default function Loader({ onLoadingComplete }: LoaderProps) {
           stagger: 0.04
         })
 
-        .to(loaderRef.current, {
-          yPercent: -100,
-          duration: 1.3,
-          ease: "custom(0.76, 0, 0, 1)",
-          fallbackEase: "expo.inOut" 
-        }, "-=0.4"); 
+          .to(loaderRef.current, {
+            yPercent: -100,
+            duration: 1.3,
+            ease: "power4.inOut"
+          }, "-=0.4");
       }
       setCounter(startValue);
     }, 45);
@@ -59,15 +58,15 @@ export default function Loader({ onLoadingComplete }: LoaderProps) {
   }, [onLoadingComplete]);
 
   return (
-    <div 
-      ref={loaderRef} 
+    <div
+      ref={loaderRef}
       className="fixed inset-0 z-10000 flex flex-col items-center justify-center bg-[#FBF3E4] text-black"
     >
       {/* 🌟 কন্টেন্ট মাস্কিং কন্টেইনার */}
       <div className="flex flex-col items-center justify-center overflow-hidden h-24 md:h-36">
-        
 
-        <span 
+
+        <span
           ref={brandRef}
           className="text-[10px] uppercase tracking-[0.4em] text-black/40 mb-2 font-medium block will-change-transform"
         >
@@ -75,8 +74,8 @@ export default function Loader({ onLoadingComplete }: LoaderProps) {
         </span>
 
         <div className="overflow-hidden py-1">
-          <p 
-            ref={textRef} 
+          <p
+            ref={textRef}
             className="text-5xl md:text-7xl font-[didot] font-light tracking-tight flex items-baseline will-change-transform"
           >
             {counter}
