@@ -7,7 +7,6 @@ import Image from "next/image";
 gsap.registerPlugin(ScrollTrigger);
 
 const Paralax = () => {
-  // HTML এলিমেন্টের সঠিক Ref টাইপ নির্ধারণ করা হলো
   const triggerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -24,7 +23,6 @@ const Paralax = () => {
         },
       });
 
-      // textReveal returns the animation properties
       const textReveal = () => {
         return {
           opacity: 1,
@@ -62,7 +60,6 @@ const Paralax = () => {
     return () => ctx.revert();
   }, []);
 
-  // text প্যারামিটারের টাইপ string নির্ধারণ করা হলো
   const renderText = (text: string) => text.split("").map((char, i) => (
     <span key={i} className="char inline-block will-change-[filter,opacity,transform]">
       {char === " " ? "\u00A0" : char}
@@ -76,39 +73,75 @@ const Paralax = () => {
         {/* Layer 1 */}
         <div className="layer-1 absolute inset-0 flex items-center justify-center w-full h-full px-4">
           <div className="absolute left-[5%] top-[15%] w-[45%] md:w-[25%] aspect-3/4 opacity-30">
-            <Image src="/zara14.webp" fill className="object-cover grayscale" alt="z1" />
+            <Image 
+              src="/zara14.webp" 
+              fill 
+              className="object-cover grayscale" 
+              alt="z1" 
+              sizes="(max-width: 768px) 45vw, 25vw" // 🌟 যুক্ত করা হলো
+            />
           </div>
           <h2 className="text-[14vw] md:text-[12vw] font-[didot] text-white z-20 pointer-events-none text-center">
             {renderText("ZENITH")}
           </h2>
           <div className="absolute right-[5%] bottom-[15%] w-[40%] md:w-[22%] aspect-3/4 opacity-30">
-            <Image src="/zara15.webp" fill className="object-cover grayscale" alt="z2" />
+            <Image 
+              src="/zara15.webp" 
+              fill 
+              className="object-cover grayscale" 
+              alt="z2" 
+              sizes="(max-width: 768px) 40vw, 22vw" // 🌟 যুক্ত করা হলো
+            />
           </div>
         </div>
 
         {/* Layer 2 */}
         <div className="layer-2 absolute inset-0 opacity-0 flex items-center justify-center w-full h-full px-4">
           <div className="absolute left-[15%] bottom-[10%] w-[35%] md:w-[20%] aspect-4/5 overflow-hidden">
-            <Image src="/zara13.webp" fill className="object-cover" alt="a1" />
+            <Image 
+              src="/zara13.webp" 
+              fill 
+              className="object-cover" 
+              alt="a1" 
+              sizes="(max-width: 768px) 35vw, 20vw" // 🌟 যুক্ত করা হলো
+            />
           </div>
           <h2 className="text-[14vw] md:text-[12vw] font-[didot] text-zinc-300 z-20 pointer-events-none text-center">
             {renderText("AURORA")}
           </h2>
           <div className="absolute right-[10%] top-[10%] w-[40%] md:w-[25%] aspect-3/4 overflow-hidden">
-            <Image src="/zara12.webp" fill className="object-cover" alt="a2" />
+            <Image 
+              src="/zara12.webp" 
+              fill 
+              className="object-cover" 
+              alt="a2" 
+              sizes="(max-width: 768px) 40vw, 25vw" // 🌟 যুক্ত করা হলো
+            />
           </div>
         </div>
 
         {/* Layer 3 */}
         <div className="layer-3 absolute inset-0 opacity-0 flex items-center justify-center w-full h-full px-4">
           <div className="absolute left-[15%] bottom-[10%] w-[35%] md:w-[20%] aspect-4/5 overflow-hidden">
-            <Image src="/zara11.webp" fill className="object-cover" alt="v1" />
+            <Image 
+              src="/zara11.webp" 
+              fill 
+              className="object-cover" 
+              alt="v1" 
+              sizes="(max-width: 768px) 35vw, 20vw" // 🌟 যুক্ত করা হলো
+            />
           </div>
           <h2 className="text-[14vw] md:text-[12vw] font-[didot] text-zinc-300 z-20 pointer-events-none text-center">
             {renderText("VORTEX")}
           </h2>
           <div className="absolute right-[10%] top-[10%] w-[40%] md:w-[25%] aspect-3/4 overflow-hidden">
-            <Image src="/zara12.webp" fill className="object-cover" alt="v2" />
+            <Image 
+              src="/zara12.webp" 
+              fill 
+              className="object-cover" 
+              alt="v2" 
+              sizes="(max-width: 768px) 40vw, 25vw" // 🌟 যুক্ত করা হলো
+            />
           </div>
         </div>
 

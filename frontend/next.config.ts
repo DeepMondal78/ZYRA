@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: 'pk_test_51TdmasPbM063qerHRqOXAVqA4Xyn5UM0Rh0LhkVDt74NFkSmPk5ZSktjVHjiFTrAcJ137VzeSxheOpdwiyggypWp00SZtrAmnZ',
   },
+  // react-icons
+  experimental: {
+    optimizePackageImports: ["react-icons", "react-icons/pi"],
+  },
 };
 
 export default nextConfig;

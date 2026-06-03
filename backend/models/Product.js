@@ -19,6 +19,6 @@ const productSchema = new mongoose.Schema({
         type: String,
         default: ""
     }
-}, { timestamps: true }); // এটি দিয়ে প্রোডাক্টটি কখন তৈরি হলো সেই সময় অটোমেটিক সেভ থাকবে
+}, { timestamps: true }); // This will automatically add createdAt and updatedAt fields
 
 module.exports = mongoose.model('Product', productSchema);

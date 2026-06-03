@@ -32,7 +32,7 @@ const Footer = () => {
             ref={containerRef}
             className="relative bg-white text-black min-h-screen flex flex-col justify-between overflow-hidden"
         >
-            
+
             <div className="footer-content w-full px-6 md:px-12 pt-24 pb-12 flex flex-col justify-between h-full grow">
 
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-10">
@@ -46,21 +46,18 @@ const Footer = () => {
                     </div>
 
                     <button
-                        className="group relative flex items-center justify-center w-32 h-32 md:w-48 md:h-48 rounded-full border border-black overflow-hidden transition-all duration-500 
-                         hover:bg-black hover:text-white 
-                         active:scale-95 active:bg-black active:text-white
-                         focus:bg-black focus:text-white outline-none
-                         touch-manipulation"
+                        className="group relative flex items-center justify-center w-32 h-32 md:w-48 md:h-48 rounded-full border border-black/30 overflow-hidden bg-transparent transition-all duration-500 active:scale-95 touch-manipulation outline-none"
                     >
-                        <span className="z-10 text-sm uppercase tracking-widest flex items-center gap-1 font-bold pointer-events-none">
+                        <span className="z-10 text-sm uppercase tracking-[0.2em] flex items-center gap-1 font-semibold text-black group-hover:text-white transition-colors duration-500 ease-out pointer-events-none">
                             Connect
                             <ArrowUpRight
                                 size={18}
-                                className="group-hover:translate-x-1 group-hover:-translate-y-1 group-active:translate-x-1 group-active:-translate-y-1 transition-transform"
+                                className="transform transition-transform duration-500 ease-out group-hover:translate-x-5 group-hover:-translate-y-5 fixed-icon"
                             />
+                            
                         </span>
 
-                        <div className="absolute inset-0 bg-black translate-y-full group-active:translate-y-0 transition-transform duration-300 z-0 md:hidden" />
+                        <div className="absolute inset-0 bg-black translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] z-0" />
                     </button>
                 </div>
 

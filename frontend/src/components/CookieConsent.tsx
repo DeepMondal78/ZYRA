@@ -4,13 +4,13 @@ import gsap from "gsap";
 
 export default function CookieConsent() {
   const [show, setShow] = useState<boolean>(false);
-  // 🌟 কোন বাটনটি অ্যাক্টিভ কালারে থাকবে তা ট্র্যাক করার জন্য স্টেট ('accept' অথবা 'reject')
+  // Btn active state for dynamic hover effect
   const [activeBtn, setActiveBtn] = useState<"accept" | "reject">("accept");
   
   const bannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // ৭ সেকেন্ড পর ব্যানার আসবে
+    // Delay showing the banner by 7 seconds after page load
     const timer = setTimeout(() => {
       setShow(true);
     }, 7000); 
@@ -70,7 +70,7 @@ export default function CookieConsent() {
           This website collects cookies to deliver better user experience and analyze our website traffic and performance; we never collect any personal data.
         </p>
 
-        {/* 🌟 Buttons with Dynamic Hover Color Swap effect */}
+        {/* Buttons with Dynamic Hover Color Swap effect */}
         <div className="flex gap-2 pt-2">
           
           {/* Accept All Button */}

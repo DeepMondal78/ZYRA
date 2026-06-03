@@ -36,11 +36,11 @@ const importData = async () => {
   try {
     await mongoose.connect(MONGO_URI);
 
-    // আগের কোনো ভুল বা ডুপ্লিকেট ডেটা থাকলে তা ক্লিয়ার করে নেওয়া
+    // Priviusly seeded data delete kore new data insert kora
     await Product.deleteMany();
     console.log("Old products cleared...");
 
-    // নতুন ১৮টি ডেটা একসাথে ইনসার্ট করা
+    // New 18 products insert kora
     await Product.insertMany(productsToSeed);
     console.log("🚀 All 18 Premium Products Imported Successfully into ZYRA DB!");
 

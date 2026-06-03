@@ -11,39 +11,36 @@ if (typeof window !== "undefined") {
 }
 
 interface Product {
-  _id: string;      
+  _id: string;
   name: string;
-  price: number;    
-  image: string;    
+  price: number;
+  image: string;
   description?: string;
 }
 
 export default function Collection() {
   const containerRef = useRef<HTMLDivElement>(null);
-  
-  // 🌟 Context থেকে পুরো cart অ্যারেটি নিয়ে আসা হলো চেক করার জন্য
-  const { addToCart, cart } = useCart() as { 
-    addToCart: (product: any) => void; 
-    cart: any[]; 
+
+  const { addToCart, cart } = useCart() as {
+    addToCart: (product: any) => void;
+    cart: any[];
   };
-  
+
   const [dbProducts, setDbProducts] = useState<Product[]>([]);
   const [visibleCount, setVisibleCount] = useState<number>(8);
   const [loading, setLoading] = useState<boolean>(true);
-  
-  // জাস্ট ক্লিক করার মুহূর্তের ইনস্ট্যান্ট ফিডব্যাকের জন্য
+
   const [clickedProductId, setClickedProductId] = useState<string | null>(null);
-  
+
   const lenis = useLenis() as { resize?: () => void } | undefined;
 
-  // ব্যাকএন্ড থেকে ডাটা আনা
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        //  এনভায়রনমেন্ট ভ্যারিয়েবল ডাইনামিক লিঙ্ক ব্যবহার করা হলো
+        
         const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
         const response = await fetch(`${apiUrl}/api/products`);
-        
+
         const data = await response.json();
         setDbProducts(data);
         setLoading(false);
@@ -59,7 +56,7 @@ export default function Collection() {
   // Lenis Resize
   useEffect(() => {
     if (loading || dbProducts.length === 0) return;
-    
+
     if (visibleCount > 8) {
       ScrollTrigger.refresh();
       if (lenis?.resize) lenis.resize();
@@ -67,7 +64,7 @@ export default function Collection() {
       const timeout = setTimeout(() => {
         ScrollTrigger.refresh();
         if (lenis?.resize) lenis.resize();
-        window.dispatchEvent(new Event('resize')); 
+        window.dispatchEvent(new Event('resize'));
       }, 500);
 
       return () => clearTimeout(timeout);
@@ -120,7 +117,7 @@ export default function Collection() {
         </div>
       </div>
 
-      {/* Product Grid বা Loader */}
+      {/* Product Grid Loader */}
       {loading ? (
         <div className="w-full py-32 flex justify-center items-center font-[didot] text-xl tracking-widest uppercase text-black/40 animate-pulse">
           Loading ZYRA Collection...
@@ -128,11 +125,11 @@ export default function Collection() {
       ) : (
         <div className="product-grid grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-20">
           {dbProducts.slice(0, visibleCount).map((product, index) => {
-            
-            // 🌟 ম্যাজিক চেক: এই প্রোডাক্টটি অলরেডি কার্ট স্টেটের ভেতর আছে কিনা
+
+           
             const isAlreadyInCart = cart.some((item) => item.id === product._id);
 
-            // বাটনে কী টেক্সট শো করবে তার ডাইনামিক লজিক
+           
             let buttonText = "+ Add to Cart";
             if (clickedProductId === product._id) {
               buttonText = "✓ Added to Cart";
@@ -144,23 +141,24 @@ export default function Collection() {
               <div key={product._id} className="product-card group relative cursor-pointer">
                 <div className="relative aspect-3/4 w-full overflow-hidden bg-white/30">
                   <Image
-                    src={product.image} 
+                    src={product.image}
                     alt={product.name}
                     fill
                     priority={index <= 3}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     className="object-cover transition-transform duration-1000 group-hover:scale-105"
                   />
 
-                  {/* 💻 Desktop Hover Button */}
+                  
                   <div className="absolute inset-x-0 bottom-0 p-3 translate-y-full md:group-hover:translate-y-0 transition-transform duration-500 bg-white/90 backdrop-blur-sm text-center hidden md:block z-20">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        if (isAlreadyInCart) return; // অলরেডি থাকলে নতুন করে আর ক্লিক লজিক কাজ করবে না
-                        
+                        if (isAlreadyInCart) return; 
+
                         addToCart({ id: product._id, name: product.name, price: String(product.price), img: product.image });
-                        
-                        // ইনস্ট্যান্ট "Added to Cart" অ্যানিমেশন স্টেট
+
+                        //"Added to Cart" 
                         setClickedProductId(product._id);
                         setTimeout(() => {
                           setClickedProductId(null);
@@ -188,22 +186,22 @@ export default function Collection() {
                   <span className="text-[11px] md:text-[13px] font-medium text-black">${product.price}</span>
                 </div>
 
-                {/* 📱 Mobile Add to Cart Button */}
+                {/* Mobile Add to Cart Button */}
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     if (isAlreadyInCart) return;
-                    
+
                     addToCart({ id: product._id, name: product.name, price: String(product.price), img: product.image });
-                    
+
                     setClickedProductId(product._id);
                     setTimeout(() => {
                       setClickedProductId(null);
                     }, 1200);
                   }}
                   className={`w-full mt-3 py-3 border text-[9px] uppercase tracking-widest md:hidden transition-colors cursor-pointer
-                    ${isAlreadyInCart 
-                      ? "border-amber-600/20 text-amber-700/70 bg-amber-500/5 cursor-not-allowed" 
+                    ${isAlreadyInCart
+                      ? "border-amber-600/20 text-amber-700/70 bg-amber-500/5 cursor-not-allowed"
                       : "border-black/10 text-gray-500 active:bg-black active:text-white"
                     }
                     ${clickedProductId === product._id ? "border-emerald-500/30 text-emerald-600 bg-emerald-500/5" : ""}`}

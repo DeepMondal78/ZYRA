@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
-// window অবজেক্টে কাস্টম mouseX এবং mouseY এর জন্য টাইপ ডিফাইন করা হলো
+// window object typescript custom properties
 declare global {
   interface Window {
     mouseX?: number;
@@ -11,7 +11,7 @@ declare global {
 }
 
 export default function Cursor() {
-  // HTML এলিমেন্টের সঠিক Ref টাইপ নির্ধারণ করা হলো
+  // HTML element types for correct typing
   const dotRef = useRef<HTMLDivElement>(null);
   const outlineRef = useRef<HTMLDivElement>(null);
 

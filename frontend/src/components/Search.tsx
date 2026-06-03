@@ -40,15 +40,15 @@ export default function SearchPage({ isOpen, onClose }: SearchPageProps) {
         ease: "expo.in"
       });
       document.body.style.overflow = "auto";
-      // 💡 useEffect-এর ভেতর থেকে সরাসরি স্টেট সেট করার লাইন দুটি সরিয়ে দেওয়া হয়েছে
+      
     }
   }, [isOpen]);
 
-  // 🛠️ ক্লোজ হওয়ার সময় স্টেট ক্লিয়ার করার জন্য নতুন হ্যান্ডলার ফাংশন
+  // If the user clicks the close button, we want to clear the search query and suggestions before closing the overlay. This ensures that when the user opens the search again, they start with a fresh state.
   const handleClose = () => {
     setSearchQuery("");
     setSuggestions([]);
-    onClose(); // প্যারেন্ট কম্পোনেন্টের ক্লোজ ফাংশন কল হবে
+    onClose();
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,7 +73,7 @@ export default function SearchPage({ isOpen, onClose }: SearchPageProps) {
       <div className="flex justify-between items-center w-full">
         <span className="text-[10px] uppercase tracking-widest font-bold text-black">Search</span>
         
-        {/* 🛠️ এখানে onClose-এর বদলে আমাদের নতুন handleClose ফাংশনটি দেওয়া হয়েছে */}
+        {/* If the user clicks the close button, we want to clear the search query and suggestions before closing the overlay. This ensures that when the user opens the search again, they start with a fresh state. */}
         <button onClick={handleClose} className="p-2 hover:rotate-90 transition-transform duration-300">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>

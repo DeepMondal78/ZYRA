@@ -70,6 +70,7 @@ const HorizontalScroll = () => {
                     fill 
                     className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-110" 
                     alt={item.title} 
+                    sizes="(max-width: 768px) 100vw, 45vw"
                   />
                 </div>
 

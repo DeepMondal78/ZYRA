@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 const Login: React.FC = () => {
     const [mode, setMode] = useState<'login' | 'forgot' | 'register'>('login');
-    // 🌟 নতুন স্টেটের নাম যোগ করা হলো
+    // New state variables for form inputs and UI states
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -52,7 +52,7 @@ const Login: React.FC = () => {
 
             try {
                 console.log("Registering user:", { name, email, password });
-                // 🌟 রিকোয়েস্ট বডিতে এখন name ও পাঠানো হচ্ছে
+                // Request to create a new user and initialize their node
                 const response = await fetch(`${baseUrl}/api/auth/register`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -66,7 +66,7 @@ const Login: React.FC = () => {
                 }
 
                 alert("Account created successfully! Please log in.");
-                // রেজিস্টার সফল হলে ফিল্ডগুলো খালি করে লগইনে নিয়ে যাবে
+                // Reset form and switch to login mode after successful registration
                 setName('');
                 setMode('login');
             } catch (err: any) {
@@ -115,10 +115,8 @@ const Login: React.FC = () => {
                     localStorage.setItem("zyra_user", JSON.stringify(user));
                 }
 
-                // 🌟 ইউজারকে সফলতার মেসেজ দেখানো
                 alert("Login Successful! Redirecting...");
 
-                // 🌟 জোরপূর্বক হোম পেজে পাঠানো এবং উইন্ডো রিলোড করা যাতে টোকেন ঠিকঠাক ডিটেক্ট হয়
                 window.location.href = "/"; 
                 
             } catch (err: any) {
@@ -210,7 +208,7 @@ const Login: React.FC = () => {
                             ) : (
                                 <form onSubmit={handleSubmit} className="space-y-8">
 
-                                    {/* 🌟 নতুন ইনপুট: NAME (এটি শুধুমাত্র REGISTER মোডে অ্যানিমেশন সহ দেখা যাবে) */}
+                                    {/* Full Name Input */}
                                     {mode === 'register' && (
                                         <motion.div 
                                             initial={{ opacity: 0, y: -10 }}

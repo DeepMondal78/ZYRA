@@ -37,7 +37,7 @@ export default function AvantGardeHelp() {
 
         <div className="w-full h-screen bg-[#F9F9F9] text-[#111111] font-sans pt-24 pb-8 px-6 md:px-16 flex flex-col justify-between overflow-hidden select-none">
 
-            {/* ================= ১. আল্ট্রা-মিনিমাল লাইট হেডার ================= */}
+            {/* Light header */}
             <div className="flex justify-between items-end border-b border-gray-200 pb-4">
                 <div>
                     <span className="text-[9px] tracking-[0.6em] text-gray-400 uppercase font-mono block mb-1">
@@ -52,7 +52,7 @@ export default function AvantGardeHelp() {
                 </span>
             </div>
 
-            {/* ================= ২. সিনেমাটিক এক্সপ্যান্ডেবল কার্ডস প্যানেল ================= */}
+            {/* Cinematic paralax */}
             <div className="flex-1 flex flex-col md:flex-row gap-4 my-8 h-full max-h-[65vh] items-stretch">
                 {supportCards.map((card) => {
                     const isExpanded = expandedId === card.id;
@@ -60,21 +60,20 @@ export default function AvantGardeHelp() {
                     return (
                         <motion.div
                             key={card.id}
-                            layout /* লেআউট সাইজ চেঞ্জের ম্যাজিক অ্যানিমেশন */
+                            layout /* layout size changing animation  */
                             onClick={() => setExpandedId(card.id)}
                             className={`relative p-6 md:p-10 flex flex-col justify-between cursor-pointer border transition-colors duration-500 rounded-xs overflow-hidden ${isExpanded
                                     ? 'bg-white border-gray-900 flex-[3.5]'
                                     : 'bg-white/40 border-gray-200/80 hover:bg-white hover:border-gray-400 flex-[0.6] md:flex-[0.5]'
                                 }`}
-                            /* 🛠️ ULTRA SMOOTH ANIMATION CURVE: বাউন্সি ভাব কমিয়ে একদম মাখনের মতো স্মুথ করা হয়েছে */
+                            /* Ultar smooth animetion curve*/
                             transition={{ type: "spring", stiffness: 180, damping: 26 }}
                         >
-                            {/* ব্যাকগ্রাউন্ড ইডিটোরাল নম্বর - কালার টোন হালকা করা হয়েছে যাতে টেক্সট পড়তে সমস্যা না হয় */}
                             <div className="absolute right-4 top-2 text-[7rem] md:text-[10rem] font-serif font-black text-gray-100/70 pointer-events-none select-none">
                                 {card.number}
                             </div>
 
-                            {/* কার্ডের উপরের টাইটেল গ্রুপ */}
+                            {/* Card top title */}
                             <div className="relative z-10 flex items-center justify-between">
                                 <div className={`${!isExpanded && 'md:rotate-90 md:origin-left md:absolute md:top-4 md:left-8 md:whitespace-nowrap'}`}>
                                     <span className="text-[10px] font-mono tracking-widest text-gray-400 block mb-1">
@@ -93,7 +92,7 @@ export default function AvantGardeHelp() {
                                 )}
                             </div>
 
-                            {/* কার্ডের ভেতরের কন্টেন্ট (Fade-up Motion) */}
+                            {/* Under card content (Fade-up Motion) */}
                             <div className="relative z-10 max-w-xl">
                                 <AnimatePresence mode="wait">
                                     {isExpanded && (
@@ -153,7 +152,7 @@ export default function AvantGardeHelp() {
                                 </AnimatePresence>
                             </div>
 
-                            {/* নিচের অ্যাকশন ক্লু */}
+                            {/* Bottom action buttons */}
                             <div className="relative z-10 flex justify-between items-center text-[9px] font-mono text-gray-400 tracking-widest">
                                 <span className={`${isExpanded ? 'text-[#111111]' : 'text-gray-400'}`}>[ OPEN PARAMETER ]</span>
                                 {!isExpanded && <span className="text-gray-400 group-hover:text-black">EXPAND +</span>}
@@ -163,7 +162,7 @@ export default function AvantGardeHelp() {
                 })}
             </div>
 
-            {/* ================= ৩. ফিক্সড লাইট ফুটার ================= */}
+            {/* Footer */}
             <div className="pt-4 border-t border-gray-200 flex justify-between text-[9px] text-gray-400 tracking-widest uppercase font-mono">
                 <span>HQ // CONTEXT CORP GLOBAL</span>
                 <span>NO-SCROLL WORKSPACE V2</span>

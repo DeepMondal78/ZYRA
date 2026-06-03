@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 const RevealOverlay = () => {
-    // HTML এলিমেন্টের সঠিক Ref টাইপ নির্ধারণ করা হলো
+    // Html element refrences 
     const containerRef = useRef<HTMLDivElement>(null);
     const mosaicRef = useRef<HTMLDivElement>(null);
 
@@ -15,7 +15,7 @@ const RevealOverlay = () => {
         const fragmentCount = rows * cols;
         const mosaic = mosaicRef.current;
 
-        // mosaic অবজেক্টটি নাল (null) কিনা তা পরীক্ষা করে নেওয়া হলো
+        // mosaic object null/undefined condition check and return early if true
         if (!mosaic) return;
 
         for (let i = 0; i < fragmentCount; i++) {

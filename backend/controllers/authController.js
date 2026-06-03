@@ -14,7 +14,7 @@ exports.registerUser = async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Hash password (নিরাপত্তার জন্য পাসওয়ার্ড লক করা)
+    // Hash password (Safty lock for password)
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -42,31 +42,31 @@ exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // ১. চেক করা—এই ইমেইলের কোনো ইউজার ডাটাবেজে আছে কি না
+    // Check if user exists
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: 'Invalid credential synchronization.' });
     }
 
-    // ২. পাসওয়ার্ড চেক করা (ডাটাবেজের হ্যাশ করা পাসওয়ার্ডের সাথে ম্যাচ করানো)
+    // Check if password matches
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credential synchronization.' });
     }
 
-    // ৩. লগইন সফল হলে JWT Token তৈরি করা
+    // If everything is fine, generate JWT token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: '30d',
     });
 
-    // ৪. ফ্রন্টএন্ডে টোকেন ও ইউজারের ডাটা পাঠানো
+    // Frontend token and user data receving response
     res.status(200).json({ 
       token, 
       user: { id: user._id, name: user.name, email: user.email } 
     });
 
   } catch (error) {
-    // কোনো ইন্টারনাল এরর হলেও যাতে HTML না গিয়ে JSON যায়, তা নিশ্চিত করা
+    // If any internal error occurs, ensure it returns JSON instead of HTML
     res.status(500).json({ message: error.message });
   }
 };

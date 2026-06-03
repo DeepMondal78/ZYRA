@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-// 🌟 এখানে loginUser কন্ট্রোলারটিও ইম্পোর্ট করতে হবে
+// Importing login controller functions
 const { registerUser, loginUser } = require('../controllers/authController');
 
 // Route define kora hocche
 router.post('/register', registerUser);
 
-// 🌟 এই নতুন লাইনটি যোগ করুন লগইনের জন্য
+// New login route added
 router.post('/login', loginUser); 
 
 module.exports = router;

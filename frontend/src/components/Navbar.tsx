@@ -6,10 +6,10 @@ import { PiShoppingBagLight } from "react-icons/pi";
 import Image from "next/image";
 import { useCart } from "../context/CartContext";
 import CartDrawer from "../components/CartDrawer";
-import Login from "../components/Login"; 
-import Help from "../components/Help"; 
+import Login from "../components/Login";
+import Help from "../components/Help";
 
-// SplitText-এর প্রোপসের জন্য টাইপস্ক্রিপ্ট ইন্টারফেস
+// SplitText
 interface SplitTextProps {
   children: string;
 }
@@ -56,8 +56,8 @@ export default function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
   const [currentImg, setCurrentImg] = useState<number>(0);
-  const [showLogin, setShowLogin] = useState<boolean>(false); 
-  const [showHelp, setShowHelp] = useState<boolean>(false); 
+  const [showLogin, setShowLogin] = useState<boolean>(false);
+  const [showHelp, setShowHelp] = useState<boolean>(false);
 
   const { cartCount } = useCart() as CartContextType;
 
@@ -76,7 +76,7 @@ export default function Navbar() {
   useEffect(() => {
     const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
 
-    if (isOpen || showLogin) { 
+    if (isOpen || showLogin) {
       document.body.style.overflow = "hidden";
     }
 
@@ -89,7 +89,7 @@ export default function Navbar() {
         ease: "power4.out",
       });
       document.body.style.paddingRight = `${scrollBarWidth}px`;
-    } else if (!showLogin) { 
+    } else if (!showLogin) {
       gsap.to(".nav-link", {
         y: 50,
         opacity: 0,
@@ -134,20 +134,20 @@ export default function Navbar() {
               <span>({cartCount})</span>
             </button>
 
-            <button 
+            <button
               onClick={() => {
                 setShowLogin(true);
-                setIsOpen(false); 
+                setIsOpen(false);
               }}
               className="hover:opacity-70 transition border-b border-black w-fit"
             >
               Login
             </button>
 
-            <button 
+            <button
               onClick={() => {
                 setShowHelp(true);
-                setIsOpen(false); 
+                setIsOpen(false);
               }}
               className="hover:opacity-70 transition border-b border-black w-fit"
             >
@@ -164,7 +164,13 @@ export default function Navbar() {
               <div className="nav-link opacity-0 translate-y-20 relative w-full h-125 flex gap-3.5 items-center justify-center">
                 <h1 className="absolute text-[12vw] font-[didot] text-black tracking-[0.1rem] z-10 select-none">ZYRA</h1>
                 <div className="relative w-55 h-70 z-0 overflow-hidden shadow-2xl">
-                  <Image src={images[currentImg]} alt="loop-model" fill className="w-full h-full object-cover transition-opacity duration-500" />
+                  <Image
+                    src={images[currentImg]}
+                    alt="loop-model"
+                    fill
+                    sizes="300px"
+                    className="object-cover transition-opacity duration-500"
+                  />
                 </div>
               </div>
             </div>
@@ -205,12 +211,12 @@ export default function Navbar() {
 
         {showLogin && (
           <div className="fixed inset-0 z-20000 bg-white">
-            <button 
+            <button
               onClick={() => {
                 setShowLogin(false);
                 document.body.style.overflow = "auto";
                 document.body.style.paddingRight = "0px";
-              }} 
+              }}
               className="absolute top-8 right-8 z-21000 text-xs tracking-widest uppercase border-b border-black text-black hover:opacity-50"
             >
               CLOSE ✕
@@ -221,7 +227,7 @@ export default function Navbar() {
 
         {showHelp && (
           <div className="fixed inset-0 z-20000 bg-white">
-            <button 
+            <button
               onClick={() => {
                 setShowHelp(false);
                 document.body.style.overflow = "auto";

@@ -28,7 +28,6 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
 
     const scrollRef = useRef<HTMLDivElement>(null);
     
-    // 💡 এখানে 'as any' যুক্ত করা হয়েছে যাতে টাইপস্ক্রিপ্ট এরর না দেয়
     const lenis = useLenis() as any;
 
     const handleCheckout = (item: CartItem) => {
