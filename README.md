@@ -1,4 +1,4 @@
-# 🏛️ ZYRA — Luxury Full-Stack E-Commerce Experience
+# ZYRA — Luxury Full-Stack E-Commerce Experience
 
 ZYRA is an ultra-minimalist, high-end e-commerce platform designed with an editorial aesthetic inspired by premium fashion houses like Saint Laurent and Zara. It seamlessly blends cinematic, silky-smooth frontend motions with a secure, production-grade full-stack architecture.
 
