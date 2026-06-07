@@ -35,7 +35,7 @@ const Lookbook = () => {
 
       <div className="max-w-7xl mx-auto grid grid-cols-12 gap-4 relative">
         
-        {/* 🌟 zara9.webp: মোবাইলে ফুল স্ক্রিন, ডেক্সটপে অর্ধেক স্ক্রিন (col-span-6) */}
+        {/* 🌟 zara9.webp: mobile screen / desktop (col-span-6) */}
         <div className="col-span-12 md:col-span-6 aspect-4/5 relative floating-img overflow-hidden rounded-sm">
           <Image 
             src="/zara9.webp" 
@@ -46,7 +46,7 @@ const Lookbook = () => {
           />
         </div>
 
-        {/* 🌟 zara8.webp: মোবাইলে অর্ধেক স্ক্রিন (col-span-6), ডেক্সটপে ৪ ভাগের ১ ভাগ (col-span-3) */}
+        {/* 🌟 zara8.webp: mobile screen / desktop (col-span-6), tablet (col-span-3) */}
         <div className="col-span-6 md:col-span-3 aspect-3/4 relative mt-20 floating-img overflow-hidden rounded-sm">
           <Image 
             src="/zara8.webp" 
@@ -57,7 +57,7 @@ const Lookbook = () => {
           />
         </div>
 
-        {/* 🌟 zara7.webp: মোবাইলে অর্ধেক স্ক্রিন (col-span-6), ডেক্সটপে ৪ ভাগের ১ ভাগ (col-span-3) */}
+        {/* 🌟 zara7.webp: mobile screen / desktop (col-span-6), tablet (col-span-3) */}
         <div className="col-span-6 md:col-span-3 aspect-3/4 relative mt-40 floating-img overflow-hidden rounded-sm">
           <Image 
             src="/zara7.webp" 
@@ -74,7 +74,7 @@ const Lookbook = () => {
             </p>
         </div>
 
-        {/* 🌟 zara6.webp: মোবাইলে ফুল স্ক্রিন, ডেক্সটপে ১২ ভাগের ৫ ভাগ (col-span-5) */}
+        {/* 🌟 zara6.webp: mobile screen / desktop (col-span-5) */}
         <div className="col-span-12 md:col-span-5 aspect-video relative mt-12 floating-img overflow-hidden rounded-sm">
           <Image 
             src="/zara6.webp" 

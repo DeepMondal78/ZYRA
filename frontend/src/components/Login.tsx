@@ -95,13 +95,13 @@ const Login: React.FC = () => {
                 }
 
                 const data = await response.json();
-                console.log("🔥 Backend Response Data:", data); // 👈 ব্যাকএন্ড কী পাঠাচ্ছে তা কনসোলে দেখার জন্য
+                console.log("🔥 Backend Response Data:", data); // Backend Response Data
 
                 if (!response.ok) {
                     throw new Error(data.message || "Invalid credential synchronization.");
                 }
 
-                // 🌟 ব্যাকএন্ড থেকে টোকেন আসছে কিনা নিশ্চিত হয়ে সেভ করা
+                // Token came in different possible fields, so we check all common ones. Same for user data.
                 const token = data.token || data.accessToken; 
                 const user = data.user || data.userData;
 

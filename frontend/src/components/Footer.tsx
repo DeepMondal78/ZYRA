@@ -41,7 +41,7 @@ const Footer = () => {
                             Have a project in mind?
                         </h4>
                         <h2 className="text-[12vw] md:text-[8vw] font-[didot] leading-[0.9] uppercase pointer-events-none">
-                            Let&apos;s <br /> Create <span className="italic font-serif text-zinc-400">Magic</span>
+                            Defining&apos;s <br /> Modern <span className="text-zinc-400">Elegance</span>
                         </h2>
                     </div>
 
