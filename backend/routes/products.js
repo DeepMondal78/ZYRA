@@ -1,47 +1,42 @@
-// backend/routes/products.js
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product'); 
-const { protect } = require('../middleware/authMiddleware'); // অথেন্টিকেশন মিডেলওয়্যার ইম্পোর্ট করা হলো
+const { protect } = require('../middleware/authMiddleware');
 
-// @route   POST /api/products
-// @desc    Create a new product (Protected: Only authenticated users/admin)
-router.post('/', protect, async (req, res) => {
+// GET: Public (Get all products)
+router.get('/', async (req, res) => {
     try {
-        const { name, price, image, description, category, stock } = req.body;
-
-        // Validation: Check if required fields are present
-        if (!name || !price || !image) {
-            return res.status(400).json({ message: "Please enter all required fields (name, price, image)" });
-        }
-
-        // Create new product object
-        const newProduct = new Product({
-            name,
-            price,
-            image,
-            description,
-            category,
-            stock
-        });
-
-        // Save the new product to the database
-        const savedProduct = await newProduct.save();
-        res.status(201).json(savedProduct);
-
+        const products = await Product.find().lean();
+        res.status(200).json(products);
     } catch (error) {
-        res.status(500).json({ message: "Server error while saving product", error: error.message });
+        res.status(500).json({ message: "Server error", error: error.message });
     }
 });
 
-// @route   GET /api/products
-// @desc    Get all products from MongoDB (Public route)
-router.get('/', async (req, res) => {
+// POST: Protected (Create product)
+router.post('/', protect, async (req, res) => {
     try {
-        const products = await Product.find().lean(); // .lean() ব্যবহার করলে পারফরম্যান্স ভালো হয় এবং অডিট dbrules খুশি থাকে
-        res.status(200).json(products);
+        const { name, price, image, description, category, stock } = req.body;
+        if (!name || !price || !image) {
+            return res.status(400).json({ message: "Please enter all required fields" });
+        }
+        const newProduct = new Product({ name, price, image, description, category, stock });
+        const savedProduct = await newProduct.save();
+        res.status(201).json(savedProduct);
     } catch (error) {
-        res.status(500).json({ message: "Server error while fetching products", error: error.message });
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+});
+
+// DELETE: Protected (Delete product)
+router.delete('/:id', protect, async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+        if (!product) return res.status(404).json({ message: "Product not found" });
+        await product.deleteOne();
+        res.status(200).json({ message: "Product removed" });
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
     }
 });
 
