@@ -44,7 +44,7 @@ export default function SearchPage({ isOpen, onClose }: SearchPageProps) {
     }
   }, [isOpen]);
 
-  // If the user clicks the close button, we want to clear the search query and suggestions before closing the overlay. This ensures that when the user opens the search again, they start with a fresh state.
+ 
   const handleClose = () => {
     setSearchQuery("");
     setSuggestions([]);
