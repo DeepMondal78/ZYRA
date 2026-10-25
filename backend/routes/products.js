@@ -2,12 +2,13 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/Product'); 
+const { protect } = require('../middleware/authMiddleware'); // অথেন্টিকেশন মিডেলওয়্যার ইম্পোর্ট করা হলো
 
 // @route   POST /api/products
-// @desc    Create a new product (Save new product to MongoDB)
-router.post('/', async (req, res) => {
+// @desc    Create a new product (Protected: Only authenticated users/admin)
+router.post('/', protect, async (req, res) => {
     try {
-        const { name, price, image, description } = req.body;
+        const { name, price, image, description, category, stock } = req.body;
 
         // Validation: Check if required fields are present
         if (!name || !price || !image) {
@@ -19,7 +20,9 @@ router.post('/', async (req, res) => {
             name,
             price,
             image,
-            description
+            description,
+            category,
+            stock
         });
 
         // Save the new product to the database
@@ -32,15 +35,14 @@ router.post('/', async (req, res) => {
 });
 
 // @route   GET /api/products
-// @desc    Get all products from MongoDB (Fetch all products from the database)
+// @desc    Get all products from MongoDB (Public route)
 router.get('/', async (req, res) => {
     try {
-        const products = await Product.find(); 
+        const products = await Product.find().lean(); // .lean() ব্যবহার করলে পারফরম্যান্স ভালো হয় এবং অডিট dbrules খুশি থাকে
         res.status(200).json(products);
     } catch (error) {
         res.status(500).json({ message: "Server error while fetching products", error: error.message });
     }
 });
 
-// This line is not add to crush server (Requird for export the router to use in server.js)
 module.exports = router;
